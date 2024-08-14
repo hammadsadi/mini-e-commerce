@@ -1,4 +1,5 @@
 import CategorizationSidebar from "../../components/CategorizationSidebar/CategorizationSidebar";
+import Products from "../../components/Products/Products";
 import MyContainer from "../../components/Shared/MyContainer/MyContainer";
 import SectionTitle from "../../components/Shared/SectionTitle/SectionTitle";
 
@@ -72,7 +73,7 @@ const Home = () => {
           </div>
           {/* Products */}
           <div className="md:col-span-5">
-            <h2>Product</h2>
+            <Products />
           </div>
         </div>
       </MyContainer>
