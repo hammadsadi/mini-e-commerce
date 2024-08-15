@@ -1,8 +1,9 @@
 import { FaStar } from "react-icons/fa";
-
-const ProductItem = () => {
+import PropTypes from "prop-types";
+const ProductItem = ({ product }) => {
+  console.log(product?.productImage);
   return (
-    <a href="#" className="group relative block overflow-hidden">
+    <a className="group relative block overflow-hidden">
       <button className="absolute end-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">
         Man
       </button>
@@ -11,7 +12,7 @@ const ProductItem = () => {
       </button>
 
       <img
-        src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
+        src={product?.productImage}
         alt=""
         className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
       />
@@ -41,5 +42,7 @@ const ProductItem = () => {
     </a>
   );
 };
-
+ProductItem.propTypes = {
+  product: PropTypes.object,
+};
 export default ProductItem;
