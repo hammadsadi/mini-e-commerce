@@ -1,15 +1,21 @@
 import { FaStar } from "react-icons/fa";
 import PropTypes from "prop-types";
 const ProductItem = ({ product }) => {
-  console.log(product?.productImage);
+  const options = {
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true, // Set to false for 24-hour format
+  };
   return (
     <a className="group relative block overflow-hidden">
       <button className="absolute end-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">
-        Man
+        {product?.brandName}
       </button>
-      <button className="absolute start-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">
+      {/* <button className="absolute start-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">
         Man
-      </button>
+      </button> */}
 
       <img
         src={product?.productImage}
@@ -22,15 +28,25 @@ const ProductItem = ({ product }) => {
           Brand
         </span> */}
 
-        <h3 className=" text-lg font-medium text-gray-900">Robot Toy</h3>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing</p>
+        <h3 className=" text-lg font-medium text-gray-900">
+          {product?.productName}
+        </h3>
+        <p>{product?.description}</p>
 
-        <p className="mt-1.5 text-gray-700 font-bold text-lg">$14.99</p>
+        <p className="mt-1.5 text-gray-700 font-bold text-lg">
+          ${product?.price}
+        </p>
         <div className="flex justify-between items-center">
           <p className="flex gap-1 items-center text-sm">
-            <FaStar className="text-yellow-600" /> <span>Ratings(20)</span>
+            <FaStar className="text-yellow-600" />{" "}
+            <span>Ratings {product?.ratings}</span>
           </p>
-          <p className="text-xs">2-2-2024</p>
+          <p className="text-xs">
+            {new Date(product?.creationDateTime).toLocaleString(
+              undefined,
+              options
+            )}
+          </p>
         </div>
 
         <form className="mt-4">

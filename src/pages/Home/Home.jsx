@@ -1,9 +1,33 @@
+import { useRef } from "react";
 import CategorizationSidebar from "../../components/CategorizationSidebar/CategorizationSidebar";
 import Products from "../../components/Products/Products";
 import MyContainer from "../../components/Shared/MyContainer/MyContainer";
 import SectionTitle from "../../components/Shared/SectionTitle/SectionTitle";
-
+import queryString from "query-string";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate();
+  const searchText = useRef();
+  // handleSearch
+  const handleSearch = () => {
+    const currentQueries = { query: searchText?.current.value };
+    const url = queryString.stringifyUrl({
+      url: "/",
+      query: currentQueries,
+    });
+    navigate(url);
+  };
+
+  // handleChangeSort
+  const handleChangeSort = (e) => {
+    console.log(e.target.value);
+    const currentQueries = { query: e.target.value };
+    const url = queryString.stringifyUrl({
+      url: "/",
+      query: currentQueries,
+    });
+    navigate(url);
+  };
   return (
     <div>
       <MyContainer>
@@ -22,13 +46,16 @@ const Home = () => {
 
                 <input
                   type="text"
+                  ref={searchText}
                   id="Search"
+                  name="search"
                   placeholder="Search for..."
                   className="w-full rounded-md border outline-none px-3 py-1 border-gray-200 focus:border-teal-600 pe-10 shadow-sm sm:text-sm"
                 />
 
                 <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
                   <button
+                    onClick={handleSearch}
                     type="button"
                     className="text-gray-600 hover:text-gray-700"
                   >
@@ -57,6 +84,7 @@ const Home = () => {
               <select
                 name=""
                 id=""
+                onChange={handleChangeSort}
                 className="py-1 px-2 outline-none border-gray-200 border focus:border-teal-600"
               >
                 <option value="lowToHigh">Low to High</option>
