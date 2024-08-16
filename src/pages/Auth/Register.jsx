@@ -1,14 +1,30 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
+  const { createUser, updateUserProfile, signInWithGoogle } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
   // handleSubmitFrom
-  const handleSubmitFrom = (e) => {
+  const handleSubmitFrom = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
-    console.log({ email, password, name });
+    try {
+      const data = await createUser(email, password);
+      if (data.user) {
+        await updateUserProfile(name, null);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
+  // signInWithGoogle
+  const handleSignInWithGoogle = async () => [await signInWithGoogle()];
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -16,6 +32,7 @@ const Register = () => {
         <h1 className="text-2xl font-bold text-center">Create Account</h1>
         <div className="flex justify-center space-x-4">
           <button
+            onClick={handleSignInWithGoogle}
             aria-label="Login with Google"
             type="button"
             className="flex items-center justify-center w-full p-4 space-x-4 rounded-md focus:ring-2 focus:ring-offset-1  border focus:teal-600"
