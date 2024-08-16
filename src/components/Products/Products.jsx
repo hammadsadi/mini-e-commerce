@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import ProductItem from "../Shared/ProductItem/ProductItem";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 const Products = () => {
+  const [params, setParams] = useSearchParams();
+  const category = params.get("query");
   const { data: products = [] } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", category],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/products`
+        `${import.meta.env.VITE_API_BASE_URL}/products?category=${category}`
       );
       return data;
     },

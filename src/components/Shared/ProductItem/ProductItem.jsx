@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import PropTypes from "prop-types";
 const ProductItem = ({ product }) => {
+  // console.log(typeof product?.price);
   const options = {
     month: "2-digit",
     day: "2-digit",
@@ -10,7 +11,7 @@ const ProductItem = ({ product }) => {
   };
   return (
     <a className="group relative block overflow-hidden">
-      <button className="absolute end-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">
+      <button className="absolute end-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75 uppercase">
         {product?.brandName}
       </button>
       {/* <button className="absolute start-4 top-4 z-10  bg-white py-[2px] px-2 text-xs text-gray-900 transition hover:text-gray-900/75">

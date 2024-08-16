@@ -20,7 +20,6 @@ const Home = () => {
 
   // handleChangeSort
   const handleChangeSort = (e) => {
-    console.log(e.target.value);
     const currentQueries = { query: e.target.value };
     const url = queryString.stringifyUrl({
       url: "/",
