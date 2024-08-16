@@ -1,20 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+import { useContext } from "react";
 
 const Login = () => {
+  const { signInWithGoogle, signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   // handleSubmitFrom
-  const handleSubmitFrom = (e) => {
+  const handleSubmitFrom = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log({ email, password });
+    try {
+      const data = await signIn(email, password);
+      if (data.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-
+  // signInWithGoogle
+  const handleSignInWithGoogle = async () => [await signInWithGoogle()];
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-100">
         <h1 className="text-2xl font-bold text-center">Login</h1>
         <div className="flex justify-center space-x-4">
           <button
+            onClick={handleSignInWithGoogle}
             aria-label="Login with Google"
             type="button"
             className="flex items-center justify-center w-full p-4 space-x-4  rounded-md focus:ring-2 focus:ring-offset-1 border focus:teal-600"
