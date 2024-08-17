@@ -78,7 +78,7 @@ const Home = () => {
     fetchProducts();
   }, [search, brand, category, minPrice, maxPrice, sortBy]);
 
-  if (loading) return <Loader />;
+  // if (loading) return <Loader />;
   return (
     <div>
       <MyContainer>
