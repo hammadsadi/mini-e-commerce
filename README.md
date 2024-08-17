@@ -1,8 +1,32 @@
-# React + Vite
+# Project Clone and Run Step
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. At First Clone This Repo
 
-Currently, two official plugins are available:
+ <!-- <img src="https://i.postimg.cc/C1vK1D4H/shopcli1.png" alt="" /> -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Open This Project on Your Favourite Code Editor and Run This Command on the Vs Code terminal
+
+```js
+//comment following commands
+npm install
+```
+
+3. Setup env Variable Firebase Auth
+
+```js
+//comment following commands
+VITE_apiKey;
+VITE_authDomain;
+VITE_projectId;
+VITE_storageBucket;
+VITE_messagingSenderId;
+VITE_appId;
+VITE_API_BASE_URL;
+```
+
+4. Run This Project following on this command
+
+```js
+//comment following commands
+npm run dev
+```
