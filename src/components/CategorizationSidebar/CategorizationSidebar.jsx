@@ -1,123 +1,52 @@
-import { useState } from "react";
+import RadioField from "../Shared/RadioField/RadioField";
 
-const CategorizationSidebar = () => {
-  const [rangevalue, setRangeValue] = useState(0);
-  // handleChangeBrand
-  const handleChangeBrand = (e) => {
-    console.log(e.target.value);
-  };
-  // handleChangeCategory
-  const handleChangeCategory = (e) => {
-    console.log(e.target.value);
-  };
+const CategorizationSidebar = ({
+  handleBrand,
+  handleCategory,
+  handlePriceRange,
+}) => {
   return (
     <div className="space-y-2">
       {/* Brand  */}
       <div>
         <h2 className="text-lg font-medium text-gray-900">Brands</h2>
         <div className="mt-1 space-y-2">
-          <label
-            htmlFor="Option1"
-            className="flex cursor-pointer items-start gap-4"
-          >
-            <div className="flex items-center">
-              &#8203;
-              <input
-                onChange={handleChangeBrand}
-                type="checkbox"
-                value="anjans"
-                className="size-4 rounded border-gray-300"
-                id="Option1"
-              />
-            </div>
-
-            <div>
-              <strong className="font-medium text-gray-900">Anjans</strong>
-            </div>
-          </label>
-          <label
-            htmlFor="Option1"
-            className="flex cursor-pointer items-start gap-4"
-          >
-            <div className="flex items-center">
-              &#8203;
-              <input
-                onChange={handleChangeBrand}
-                type="checkbox"
-                value="nike"
-                className="size-4 rounded border-gray-300"
-                id="Option1"
-              />
-            </div>
-
-            <div>
-              <strong className="font-medium text-gray-900">Nike</strong>
-            </div>
-          </label>
-          <label
-            htmlFor="Option1"
-            className="flex cursor-pointer items-start gap-4"
-          >
-            <div className="flex items-center">
-              &#8203;
-              <input
-                onChange={handleChangeBrand}
-                type="checkbox"
-                value="sailor"
-                className="size-4 rounded border-gray-300"
-                id="Option1"
-              />
-            </div>
-
-            <div>
-              <strong className="font-medium text-gray-900">Sailor</strong>
-            </div>
-          </label>
+          <RadioField
+            handleChangeRadio={handleBrand}
+            value="anjans"
+            name="brand"
+            title="Anjans"
+          />
+          <RadioField
+            handleChangeRadio={handleBrand}
+            value="nike"
+            name="brand"
+            title="Nike"
+          />
+          <RadioField
+            handleChangeRadio={handleBrand}
+            value="sailor"
+            name="brand"
+            title="Sailor"
+          />
         </div>
       </div>
       {/* Category */}
       <div>
         <h2 className="text-lg font-medium text-gray-900">Category</h2>
         <div className="mt-1 space-y-2">
-          <label
-            htmlFor="Option1"
-            className="flex cursor-pointer items-start gap-4"
-          >
-            <div className="flex items-center">
-              &#8203;
-              <input
-                onChange={handleChangeCategory}
-                type="checkbox"
-                value="Women's"
-                className="size-4 rounded border-gray-300"
-                id="Option1"
-              />
-            </div>
-
-            <div>
-              <strong className="font-medium text-gray-900">Women's</strong>
-            </div>
-          </label>
-
-          <label
-            htmlFor="Option1"
-            className="flex cursor-pointer items-start gap-4"
-          >
-            <div className="flex items-center">
-              &#8203;
-              <input
-                onChange={handleChangeCategory}
-                type="checkbox"
-                value="Men's"
-                className="size-4 rounded border-gray-300"
-                id="Option1"
-              />
-            </div>
-
-            <div>
-              <strong className="font-medium text-gray-900">Men's</strong>
-            </div>
-          </label>
+          <RadioField
+            handleChangeRadio={handleCategory}
+            value="Women's"
+            name="category"
+            title="Women's"
+          />
+          <RadioField
+            handleChangeRadio={handleCategory}
+            value="Men's"
+            name="category"
+            title="Men's"
+          />
         </div>
       </div>
       {/* Price Range */}
@@ -125,17 +54,30 @@ const CategorizationSidebar = () => {
         <h2 className="text-lg font-medium text-gray-900">Price Range</h2>
         <div className="mt-1 space-y-2">
           <div>
-            <input
-              type="range"
-              id="cowbell"
-              name="cowbell"
-              value={rangevalue}
-              onChange={(e) => setRangeValue(e.target.value)}
-              min="0"
-              max="100"
-              step="10"
+            <RadioField
+              handleChangeRadio={handlePriceRange}
+              value="50"
+              name="price"
+              title="$0-50"
             />
-            {rangevalue && <label>max ${rangevalue}</label>}
+            <RadioField
+              handleChangeRadio={handlePriceRange}
+              value="100"
+              name="price"
+              title="$50-100"
+            />
+            <RadioField
+              handleChangeRadio={handlePriceRange}
+              value="150"
+              name="price"
+              title="$100-150"
+            />
+            <RadioField
+              handleChangeRadio={handlePriceRange}
+              value="200"
+              name="price"
+              title="Over-200"
+            />
           </div>
         </div>
       </div>
