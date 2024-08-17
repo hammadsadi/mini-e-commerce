@@ -22,7 +22,12 @@ const Login = () => {
     }
   };
   // signInWithGoogle
-  const handleSignInWithGoogle = async () => [await signInWithGoogle()];
+  const handleSignInWithGoogle = async () => {
+    const data = await signInWithGoogle();
+    if (data?.user) {
+      navigate("/");
+    }
+  };
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-100">
