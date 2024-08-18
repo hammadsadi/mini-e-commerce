@@ -14,10 +14,17 @@ const Home = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
   const searchText = useRef();
+  // Pagination State
+  const [itemPerPage, setItemPerPage] = useState(6);
+  const [count, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   // handleSearch
   const handleSearch = () => {
     setSearch(searchText?.current.value);
+    setCurrentPage(1);
   };
 
   // handleChangeSort
@@ -27,12 +34,15 @@ const Home = () => {
 
   // Handle Brand
   const handleBrand = (e) => {
+    setFilter(e.target.value);
     setBrand(e.target.value);
+    setCurrentPage(1);
   };
 
   // Handle Brand
   const handleCategory = (e) => {
     setCategory(e.target.value);
+    setCurrentPage(1);
   };
 
   // Handle Brand
@@ -55,6 +65,7 @@ const Home = () => {
     }
     setMaxPrice(calcMaxPrice);
     setMinPrice(calcMinPrice);
+    setCurrentPage(1);
   };
   // Get Data
   useEffect(() => {
@@ -62,10 +73,9 @@ const Home = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/products`,
-          {
-            params: { search, brand, category, minPrice, maxPrice, sortBy },
-          }
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/products?page=${currentPage}&size=${itemPerPage}&filter=${filter}&category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&search=${search}&sortBy=${sortBy}`
         );
         setProducts(response.data);
         setLoading(false);
@@ -76,8 +86,47 @@ const Home = () => {
     };
 
     fetchProducts();
-  }, [search, brand, category, minPrice, maxPrice, sortBy]);
+  }, [
+    filter,
+    currentPage,
+    itemPerPage,
+    category,
+    brand,
+    minPrice,
+    maxPrice,
+    search,
+    sortBy,
+  ]);
 
+  // Get Data Count
+  // Get Data
+  useEffect(() => {
+    const fetchProductsCounts = async () => {
+      try {
+        const { data } = await axios.get(
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/product-count?filter=${filter}&category=${category}&brand=${brand}&minPrice=${minPrice}&maxPrice=${maxPrice}&search=${search}`
+        );
+        console.log(data.count);
+        setCount(data.count);
+      } catch (error) {
+        console.error("Error fetching products:", error.message);
+      }
+    };
+
+    fetchProductsCounts();
+  }, [filter, category, brand, minPrice, maxPrice, search]);
+
+  // Pagination
+
+  const numberOfPages = Math.ceil(count / itemPerPage);
+  const pages = [...Array(numberOfPages).keys()].map((element) => element + 1);
+  // Handle Current Page
+  const handleCurrentPage = (number) => {
+    setCurrentPage(number);
+  };
+  console.log(currentPage);
   // if (loading) return <Loader />;
   return (
     <div>
@@ -138,6 +187,7 @@ const Home = () => {
                 onChange={handleChangeSort}
                 className="py-1 px-2 outline-none border-gray-200 border focus:border-teal-600"
               >
+                <option>Sort</option>
                 <option value="lowToHigh">Low to High</option>
                 <option value="highToLow">High to Low</option>
                 <option value="newestFirst">Newest first</option>
@@ -156,7 +206,59 @@ const Home = () => {
           </div>
           {/* Products */}
           <div className="md:col-span-5">
-            <Products products={products} />
+            {products.length > 0 ? (
+              <Products products={products} />
+            ) : (
+              <h2 className="text-3xl font-bold text-teal-600 text-center">
+                Product Not Found
+              </h2>
+            )}
+
+            {/* Pagination */}
+            <ol className="flex justify-center gap-1 text-xs font-medium my-3">
+              {products?.length > 0 ? (
+                <li>
+                  <button
+                    disabled={currentPage === 1}
+                    onClick={() => handleCurrentPage(currentPage - 1)}
+                    className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180 disabled:cursor-not-allowed"
+                  >
+                    <span className="">Prev</span>
+                  </button>
+                </li>
+              ) : (
+                ""
+              )}
+
+              {pages?.map((btnItem) => (
+                <li
+                  key={btnItem}
+                  className={`block size-8 rounded ${
+                    currentPage === btnItem
+                      ? "border-teal-600 bg-teal-600 text-white"
+                      : "text-black"
+                  } text-center leading-8`}
+                >
+                  <button onClick={() => handleCurrentPage(btnItem)}>
+                    {btnItem}
+                  </button>
+                </li>
+              ))}
+
+              {products?.length > 0 ? (
+                <li>
+                  <button
+                    disabled={currentPage === numberOfPages}
+                    onClick={() => handleCurrentPage(currentPage + 1)}
+                    className="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 disabled:cursor-not-allowed rtl:rotate-180"
+                  >
+                    <span className="">Next</span>
+                  </button>
+                </li>
+              ) : (
+                ""
+              )}
+            </ol>
           </div>
         </div>
       </MyContainer>
